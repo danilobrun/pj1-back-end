@@ -7,8 +7,18 @@ const jwt = require("jsonwebtoken");
 
 const app = express()
 
+// Open Route - Public Route
 app.get('/', (req, res) => {
     res.status(200).json({ msg: 'Bem vindo a nossa API!' })
 })
 
-app.listen(3000)
+// Credencials
+const dbUser = 
+
+mongoose
+    .connect()
+    .then(() => {
+        app.listen(3000)
+        console.log('Conectou ao banco!')
+    })
+    .catch((err) => console.log(err))
