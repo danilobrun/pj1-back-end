@@ -60,6 +60,22 @@ app.post('/auth/register', async(req, res) => {
         email,
         password,
     })
+
+    try {
+
+        await user.save()
+
+        res.status(201)
+        
+    } catch (error) {
+        console.log(error)
+
+        res
+        .status(500)
+        .json({
+            msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'
+        })
+    }
 })
 
 mongoose
