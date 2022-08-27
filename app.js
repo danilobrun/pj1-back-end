@@ -18,6 +18,21 @@ app.get('/', (req, res) => {
     res.status(200).json({ msg: 'Bem vindo a nossa API!' })
 })
 
+// Private Route - Only Logged Users
+app.get('/user/:id', async (req, res) => {
+
+    const id = req.params.id
+
+    // Check if user exists
+    const user = await User.findById(id, '-password')
+
+    if(!user) {
+        res.status(404).json({ msg: 'Usuário não encontrado!' })
+    }
+
+    res.status(200).json({ user })
+})
+
 // Credencials
 const dbUser = process.env.DB_USER
 const dbPassword = process.env.DB_PASS
@@ -103,6 +118,27 @@ app.post("/auth/login/", async (req, res) => {
 
     if(!checkPassword) {
         res.status(422).json({ msg: 'Senha inválida!' })
+    }
+
+    try {
+
+        const secret = process.env.SECRET
+
+        const token = jwt.sign(
+            {
+                id: user._id
+            },
+            secret,
+        )
+
+        res.status(200).json({ msg: 'Autenticação realizada com sucesso!', token })
+
+    } catch(err) {
+        res
+        .status(500)
+        .json({
+            msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'
+        })
     }
 })
 
