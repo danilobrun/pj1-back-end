@@ -78,6 +78,34 @@ app.post('/auth/register', async(req, res) => {
     }
 })
 
+// Login User - Route
+app.post("/auth/login/", async (req, res) => {
+    const { email, password } = req.body
+
+    // Validations
+    if(!email) {
+        return res.status(422).json({ msg: 'O email é obrigatório' })
+    }
+
+    if(!password) {
+        return res.status(422).json({ msg: 'A senha é obrigatória' })
+    }
+
+    // Check if user exists
+    const user = await User.findOne({ email: email })
+
+    if(!user) {
+        return res.status(404).json({ msg: 'Usuário não encontrado.' })
+    }
+
+    // Check if password match
+    const checkPassword = await bcrypt.compare(password, user.password)
+
+    if(!checkPassword) {
+        res.status(422).json({ msg: 'Senha inválida!' })
+    }
+})
+
 mongoose
     .connect(
         `mongodb+srv://${dbUser}:${dbPassword}@cluster0.zti1m9u.mongodb.net/?retryWrites=true&w=majority`
