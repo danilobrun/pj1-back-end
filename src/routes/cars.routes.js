@@ -1,8 +1,10 @@
+const { home, listCars, checkToken } = require("../presentation/controllers/cars.controller")
+
 const carsRoutes = (app) => {
 
-    app.get('/', (req, res) => {
-        res.status(200).json({ msg: 'Bem vindo a Rent a Car sua melhor solução em aluguel de carro!' })
-    })
+    app.get('/', home);
+    app.get('/listcars', listCars);
+    app.get('/user/:id', checkToken);
 }
 
 
