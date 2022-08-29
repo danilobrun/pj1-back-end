@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const carsRoutes = require("./src/routes/cars.routes")
 
 const app = express()
 
@@ -13,10 +14,7 @@ app.use(express.json())
 // Models
 const User = require('./models/User')
 
-// Open Route - Public Route
-app.get('/', (req, res) => {
-    res.status(200).json({ msg: 'Bem vindo a nossa API!' })
-})
+carsRoutes(app)
 
 // Private Route - Only Logged Users
 app.get('/user/:id', checkToken, async (req, res) => {
