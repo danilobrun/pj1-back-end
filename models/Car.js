@@ -13,3 +13,6 @@ const Car = mongoose.model('Car', {
     door: String
 
 })
+
+// EXPORTS
+module.exports = Car
