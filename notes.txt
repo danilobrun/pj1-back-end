@@ -1,1 +1,4 @@
-stopped 51:17
+tips:
+1 - confirm password é responsabilidade do front revalidar.
+2 - back-end API fica com regra de senha (min caracteres, maiscula e etc...), usar a lib JOI para validar.
+3 - alterações no .env sempre reinciar o app pois o nodemoon não pega as att.
