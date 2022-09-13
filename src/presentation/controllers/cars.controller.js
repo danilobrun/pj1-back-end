@@ -77,7 +77,7 @@ const authRegister = async(req, res) => {
         res.status(201).json({ msg: 'Usuário criado com sucesso' })
         
     } catch (error) {
-        console.log(error)
+        console.log("error", error)
 
         res
         .status(500)

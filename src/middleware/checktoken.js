@@ -1,9 +1,12 @@
+/* IMPORTS */
+const jwt = require("jsonwebtoken");
+
 function checkToken(req, res, next) {
 
     //Get token by headers access with array authorization
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(" ")[1]
-    console.log(token);
+    console.log("token do usuário que é gerado ao logar na aplicação", token);
     if(!token) {
         res.status(401).json({ msg: 'Acesso negado!' })
         return
@@ -12,7 +15,7 @@ function checkToken(req, res, next) {
     try {
 
         const secret = process.env.SECRET
-        console.log(secret);
+        console.log("secret do env", secret);
         jwt.verify(token, secret)
 
         next()
