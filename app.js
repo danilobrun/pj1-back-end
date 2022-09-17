@@ -2,14 +2,15 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const carsRoutes = require("./src/routes/cars.routes")
+const registersRoutes = require("./src/routes")
+
 
 const app = express()
 
 // Config JSON response middleware
 app.use(express.json())
 
-carsRoutes(app)
+registersRoutes(app)
 
 // Credencials
 const dbUser = process.env.DB_USER

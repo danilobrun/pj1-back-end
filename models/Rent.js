@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 
 // Acesssos e proriedades dessa classe
-const Car = mongoose.model('Car', {
+const Rent = mongoose.model('Rent', {
     name: String,
     brand: String,
     model: String,
@@ -13,8 +13,7 @@ const Car = mongoose.model('Car', {
     door: String,
     createdAt: Date,
     updatedAt: Date
-
 })
 
 // EXPORTS
-module.exports = Car
+module.exports = Rent
