@@ -11,6 +11,7 @@ const Car = mongoose.model('Car', {
     engine: String,
     color: String,
     door: String,
+    license_plate: String,
     createdAt: Date,
     updatedAt: Date
 
