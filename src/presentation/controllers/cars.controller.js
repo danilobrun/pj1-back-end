@@ -5,8 +5,11 @@ const bcrypt = require("bcrypt");
 /* IMPORTS */
 require("dotenv").config();
 
-const listCars = (req, res) => {
-    res.status(200).json({ msg: 'Lista de carros disponíveis' })
+const listCars = async (req, res) => {
+
+    const cars = await Car.find()
+
+    res.status(200).json(cars)
 }
 
 // Private Route - Only Logged Users
@@ -18,7 +21,7 @@ const getCarById = async (req, res) => {
     const car = await Car.findById(id, '-password')
 
     if(!car) {
-        res.status(404).json({ msg: 'Carro não encontrado!'})
+        res.status(404).json({ msg: 'Carro não encontrado!' })
     }
 
     res.status(200).json({ car })
@@ -64,7 +67,7 @@ const createCar = async (req, res) => {
         return res.status(422).json({ msg: 'Carro já cadastrado, favor cadastrar um novo carro.'})
     }
 
-    // create car
+    // create car new Model
     const car = new Car({
         name,
         brand,
@@ -80,10 +83,11 @@ const createCar = async (req, res) => {
     })
 
     try {
-
+        // save into database
         await car.save()
 
         res.status(201).json({ msg: 'Carro registrado na base com sucesso!'})
+        
     } catch (error) {
         console.log('error', error);
 

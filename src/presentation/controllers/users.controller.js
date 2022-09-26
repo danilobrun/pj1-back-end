@@ -3,6 +3,12 @@ const User = require('../../../models/User')
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+const listUsers = async (req, res) => {
+
+    const users = await User.find()
+    
+    res.status(200).json(users)
+}
 // Private Route - Only Logged Users
 const getUserById = async (req, res) => {
 
@@ -127,6 +133,7 @@ const loginUser = async (req, res) => {
 }
 
 module.exports = {
+    listUsers,
     getUserById,
     createUser,
     loginUser
