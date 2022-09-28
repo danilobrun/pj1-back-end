@@ -119,6 +119,9 @@ const loginUser = async (req, res) => {
                 id: user._id
             },
             secret,
+            {
+                expiresIn: '2h' // token expira em 2 horas
+            }
         )
 
         res.status(200).json({ msg: 'Autenticação realizada com sucesso!', token })
