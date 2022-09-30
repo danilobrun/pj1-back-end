@@ -3,3 +3,17 @@ tips:
 2 []- back-end API fica com regra de senha (min caracteres, maiscula e etc...), usar a lib JOI para validar.
 3 [x]- alterações no .env sempre reinciar o app pois o nodemoon não pega as att.
 4 [] - Refatorar os validations, queria pegar todos os params passado pelo usuário e checar os vazios e retornar todos os campos vazios.
+5 [x] - JSON.stringfy converte obj para string e ao contrário JSON.parse converte uma string para obj obs: string tem que estar formatada como um obj
+return res.status(422).send(`O carro selecionado foi ${JSON.stringify(carExists.name)}`) -> nesse caso não é possível acessar obj carExists.props devido ao props ser uma string
+devemos retirar a funçõa jsonstringfy
+
+6 [] - Cria nova rota para consulta de aluguel que recebe _id test.rents 
+6.1 [] - agregation para juntar as info.
+
+
+rotas de usuário:
+- rota para trazer todos os usuário: getAll
+- rota para trazer um usuário: getById
+- rota para criar um usuário
+- rota para deletar um usuário
+- rota para editar

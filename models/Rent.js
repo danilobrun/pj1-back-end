@@ -3,14 +3,8 @@ const mongoose = require('mongoose')
 
 // Acesssos e proriedades dessa classe
 const Rent = mongoose.model('Rent', {
-    name: String,
-    brand: String,
-    model: String,
-    year: Number,
-    transmission: String,
-    engine: String,
-    color: String,
-    door: String,
+    car_id: String,
+    user_id: String, 
     createdAt: Date,
     updatedAt: Date
 })

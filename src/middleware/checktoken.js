@@ -16,7 +16,10 @@ function checkToken(req, res, next) {
 
         const secret = process.env.SECRET
         console.log("secret do env", secret);
-        jwt.verify(token, secret)
+        const data = jwt.verify(token, secret)
+        req.user_id = data.id
+        // console.log(data);
+        
 
         next()
 
