@@ -9,6 +9,7 @@ devemos retirar a funçõa jsonstringfy
 
 6 [] - Cria nova rota para consulta de aluguel que recebe _id test.rents 
 6.1 [] - agregation para juntar as info.
+7 [] - rotas rents eu recebo o dados em um array tratar essa respostas
 
 
 rotas de usuário:
