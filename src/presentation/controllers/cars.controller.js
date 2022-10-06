@@ -64,7 +64,7 @@ const createCar = async (req, res) => {
     const carExists = await Car.findOne({ license_plate: license_plate })
 
     if (carExists) {
-        return res.status(422).json({ msg: 'Carro já cadastrado, favor cadastrar um novo carro.'})
+        return res.status(422).json({ msg: `Carro de placa: ${license_plate} já cadastrado, favor cadastrar um novo carro.` })
     }
 
     // create car new Model
