@@ -17,7 +17,11 @@ const rentCar = async (req, res) => {
     // check if car exists
     const carExists = await Car.findOne({ _id: id })
 
-    if (carExists) {
+    // check if car were rented
+    const carRented = await Rent.findOne({ car_id: id })
+
+
+    if (carExists && !carRented) {
 
         const { _id, name, brand, model, year, transmission, engine, color, door, license_plate } = carExists
 
