@@ -135,9 +135,44 @@ const loginUser = async (req, res) => {
     }
 }
 
+// delete user
+const deleteUser = async (req, res) => {
+
+    const id = req.params.id
+
+    // // Validations
+    // if(!id) {
+    //     return res.status(422).json({ msg: 'Favor informar usuário.' })
+    // }
+
+    // Check if user exists
+    const user = await User.findById({ _id: id})
+
+    if(!user) {
+        res.status(404).json({ msg: 'Usuário não encontrado!' })
+    }
+
+    
+    try {
+        // Delete user
+        const removeUser = await User.findOneAndDelete({ _id: id })
+        
+
+        return res.status(200).send({ msg: `usuário deletado foi ${id}, ${removeUser.name}` })
+
+    } catch (error) {
+
+        console.log("error", error)
+    }
+    
+
+    
+}
+
 module.exports = {
     listUsers,
     getUserById,
     createUser,
-    loginUser
+    loginUser,
+    deleteUser
 }

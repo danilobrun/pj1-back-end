@@ -20,8 +20,13 @@ const rentCar = async (req, res) => {
     // check if car were rented
     const carRented = await Rent.findOne({ car_id: id })
 
+    if (carRented) {
 
-    if (carExists && !carRented) {
+        return res.status(404).json({ msg: `O carro selecionado já está alugado!` })
+        
+    }  
+    
+    else if (carExists) {
 
         const { _id, name, brand, model, year, transmission, engine, color, door, license_plate } = carExists
 
@@ -38,7 +43,9 @@ const rentCar = async (req, res) => {
         return res.status(200).send(`O carro selecionado foi 
         ${name} ${brand} ${model} ${license_plate}`)
 
-    } else {
+    } 
+   
+    else {
         return res.status(404).json({ msg: 'Carro não encontrado!' })
     }
 
