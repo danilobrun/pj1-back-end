@@ -6,10 +6,13 @@ tips:
 5 [x] - JSON.stringfy converte obj para string e ao contrário JSON.parse converte uma string para obj obs: string tem que estar formatada como um obj
 return res.status(422).send(`O carro selecionado foi ${JSON.stringify(carExists.name)}`) -> nesse caso não é possível acessar obj carExists.props devido ao props ser uma string
 devemos retirar a funçõa jsonstringfy
+6 [x] - A ORDEM DAS MIGRATIOS (NOME DO ARQUIVO) TEM QUE SER AVALIADO EXEMPLO UMA TABELA QUE TEM RELACIONAMENTOS ELA TEM QUE FICAR POR ULTIMO
+POIS ELA TEM QUE SER CRIADA APOS AS PK DAS OUTRAS PARA CHAMAR NELA AS FK.
 
 6 [] - Cria nova rota para consulta de aluguel que recebe _id test.rents 
 6.1 [] - agregation para juntar as info.
 7 [] - rotas rents eu recebo o dados em um array tratar essa respostas
+
 
 
 rotas de usuário:

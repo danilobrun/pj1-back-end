@@ -138,7 +138,9 @@ const loginUser = async (req, res) => {
 // delete user
 const deleteUser = async (req, res) => {
 
-    const id = req.params.id
+    // const { id } = req.params
+
+    // console.log(req.params);
 
     // // Validations
     // if(!id) {
@@ -149,7 +151,7 @@ const deleteUser = async (req, res) => {
     const user = await User.findById({ _id: id})
 
     if(!user) {
-        res.status(404).json({ msg: 'Usuário não encontrado!' })
+        return res.status(404).json({ msg: 'Usuário não encontrado!' })
     }
 
     
@@ -161,8 +163,8 @@ const deleteUser = async (req, res) => {
         return res.status(200).send({ msg: `usuário deletado foi ${id}, ${removeUser.name}` })
 
     } catch (error) {
-
         console.log("error", error)
+        return res.status(500).json({ msg: `Usuário ${id} não localizado!` })
     }
     
 

@@ -1,6 +1,7 @@
 const Car = require("../../../models/Car");
 const Rent = require("../../../models/Rent");
 const mongoose = require('mongoose')
+const { rentsBuilder } = require("../builders/rents.builder")
 
 
 const rentCar = async (req, res) => {
@@ -120,7 +121,7 @@ const rentsGet = async (req, res) => {
             ]
         )
         console.log(result);
-        return res.status(200).send(result)
+        return res.status(200).send(rentsBuilder(result))
     } catch (error) {
         console.log('error', error);
         res.status(500).json({ msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!' })
