@@ -1,6 +1,6 @@
 
 const { checkToken } = require("../middleware/checktoken");
-const { getUserById, createUser, loginUser, listUsers, deleteUser } = require("../presentation/controllers/users.controller");
+const { getUserById, createUser, loginUser, listUsers, deleteUser, editUser } = require("../presentation/controllers/users.controller");
 
 const usersRoutes = (app) => {
 
@@ -9,6 +9,7 @@ const usersRoutes = (app) => {
     app.post('/auth/register', createUser);
     app.post('/auth/login/', loginUser)
     app.delete('/user/:id', deleteUser)
+    app.put('/user/:id', checkToken, editUser)
 }
 
 

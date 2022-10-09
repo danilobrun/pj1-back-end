@@ -15,9 +15,10 @@ POIS ELA TEM QUE SER CRIADA APOS AS PK DAS OUTRAS PARA CHAMAR NELA AS FK.
 
 
 
-rotas de usuário:
-- rota para trazer todos os usuário: getAll
-- rota para trazer um usuário: getById
-- rota para criar um usuário
-- rota para deletar um usuário
-- rota para editar
+rotas de usuário: ✅
+- rota para trazer todos os usuário: getAll ✅
+- rota para trazer um usuário: getByIde ✅
+- rota para criar um usuário ✅
+- rota para deletar um usuário ✅
+- rota para editar ✅ -> melhorar retorno usando try catch pois ainda trás o nome antigo mesmo após de editado
+

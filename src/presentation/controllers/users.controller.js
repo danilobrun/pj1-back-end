@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const listUsers = async (req, res) => {
 
     const users = await User.find()
-    
+
     res.status(200).json(users)
 }
 // Private Route - Only Logged Users
@@ -17,7 +17,7 @@ const getUserById = async (req, res) => {
     // Check if user exists
     const user = await User.findById(id, '-password')
 
-    if(!user) {
+    if (!user) {
         res.status(404).json({ msg: 'Usuário não encontrado!' })
     }
 
@@ -25,30 +25,30 @@ const getUserById = async (req, res) => {
 }
 
 // Register User
-const createUser = async(req, res) => {
+const createUser = async (req, res) => {
     const { name, email, password, confirmpassword } = req.body
 
     // Validations
-    if(!name) {
+    if (!name) {
         return res.status(422).json({ msg: 'O nome é obrigatório' })
     }
 
-    if(!email) {
+    if (!email) {
         return res.status(422).json({ msg: 'O email é obrigatório' })
     }
 
-    if(!password) {
+    if (!password) {
         return res.status(422).json({ msg: 'A senha é obrigatória' })
     }
 
-    if(password !== confirmpassword) {
+    if (password !== confirmpassword) {
         return res.status(422).json({ msg: 'A senhas não conferem!' })
     }
 
     // check if user exists
     const userExists = await User.findOne({ email: email })
 
-    if(userExists) {
+    if (userExists) {
         return res.status(422).json({ msg: 'Por favor, utilize outro e-mail.' })
     }
 
@@ -71,15 +71,15 @@ const createUser = async(req, res) => {
         await user.save()
 
         res.status(201).json({ msg: 'Usuário criado com sucesso' })
-        
+
     } catch (error) {
         console.log("error", error)
 
         res
-        .status(500)
-        .json({
-            msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'
-        })
+            .status(500)
+            .json({
+                msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'
+            })
     }
 }
 
@@ -88,25 +88,25 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body
 
     // Validations
-    if(!email) {
+    if (!email) {
         return res.status(422).json({ msg: 'O email é obrigatório' })
     }
 
-    if(!password) {
+    if (!password) {
         return res.status(422).json({ msg: 'A senha é obrigatória' })
     }
 
     // Check if user exists
     const user = await User.findOne({ email: email })
 
-    if(!user) {
+    if (!user) {
         return res.status(404).json({ msg: 'Usuário não encontrado.' })
     }
 
     // Check if password match
     const checkPassword = await bcrypt.compare(password, user.password)
 
-    if(!checkPassword) {
+    if (!checkPassword) {
         res.status(422).json({ msg: 'Senha inválida!' })
     }
 
@@ -126,12 +126,12 @@ const loginUser = async (req, res) => {
 
         res.status(200).json({ msg: 'Autenticação realizada com sucesso!', token })
 
-    } catch(err) {
+    } catch (err) {
         res
-        .status(500)
-        .json({
-            msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'
-        })
+            .status(500)
+            .json({
+                msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'
+            })
     }
 }
 
@@ -148,17 +148,17 @@ const deleteUser = async (req, res) => {
     // }
 
     // Check if user exists
-    const user = await User.findById({ _id: id})
+    const user = await User.findById({ _id: id })
 
-    if(!user) {
+    if (!user) {
         return res.status(404).json({ msg: 'Usuário não encontrado!' })
     }
 
-    
+
     try {
         // Delete user
         const removeUser = await User.findOneAndDelete({ _id: id })
-        
+
 
         return res.status(200).send({ msg: `usuário deletado foi ${id}, ${removeUser.name}` })
 
@@ -166,9 +166,54 @@ const deleteUser = async (req, res) => {
         console.log("error", error)
         return res.status(500).json({ msg: `Usuário ${id} não localizado!` })
     }
-    
 
+}
+
+const editUser = async (req, res) => {
+
+    const { id } = req.params
+    const { name, email } = req.body
+
+    const userData = {
+        id,
+        name,
+        email
+    }
+
+    console.log(userData);
+
+    // Validations
+    if (!name) {
+        return res.status(422).json({ msg: 'O nome é obrigatório' })
+    }
+
+    if (!email) {
+        return res.status(422).json({ msg: 'O email é obrigatório' })
+    }
+
+    // check if user exists
+    const userExists = await User.findOne({ _id: id })
     
+    if (!userExists) {
+        return res.status(422).json({ msg: 'Usuário não encontrado!'})
+    }
+
+    User.findByIdAndUpdate(userData.id, {
+        name,
+        email
+    },
+    function (err, docs) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log("Updated User : ", docs);
+        }
+    })
+
+    const result = await User.find()
+    return res.status(200).json(result)
+
 }
 
 module.exports = {
@@ -176,5 +221,6 @@ module.exports = {
     getUserById,
     createUser,
     loginUser,
-    deleteUser
+    deleteUser,
+    editUser
 }
