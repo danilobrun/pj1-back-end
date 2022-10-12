@@ -198,21 +198,34 @@ const editUser = async (req, res) => {
         return res.status(422).json({ msg: 'Usuário não encontrado!'})
     }
 
-    User.findByIdAndUpdate(userData.id, {
-        name,
-        email
-    },
-    function (err, docs) {
-        if (err) {
-            console.log(err);
+    try {
+        const result = await User.findByIdAndUpdate(userData.id, {
+            name,
+            email
         }
-        else {
-            console.log("Updated User : ", docs);
-        }
-    })
+        // function (err, docs) {
+        //     if (err) {
+        //         console.log(err);
+        //     }
+        //     else {
+        //         console.log("Updated User : ", docs);
+        //     }
+        // }
+        )
+        const userListUpdated = await User.findById(userData.id)
+        console.log(userListUpdated);
+        return res.status(200).send(`Usuário atualizado!
+        Antigo:
+        ${result}
+        Atual:
+        ${userListUpdated}`)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'})
+    }
 
-    const result = await User.find()
-    return res.status(200).json(result)
+    // const result = await User.find()
+    // return res.status(200).json(result)
 
 }
 
