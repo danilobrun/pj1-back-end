@@ -99,8 +99,50 @@ const createCar = async (req, res) => {
     }
 }
 
+// delete car by id
+const deleteCar = async (req, res) => {
+
+    const { id } = req.params
+    console.log(`id do req.params.id: ${id}`);
+
+    // validation check if car exists
+    const carExists = await Car.findById({_id : id})
+
+    if(!carExists) {
+        return res.status(422).json({ msg: `carro de id:${id} não existe, favor informar um novo carro!`})
+    }
+
+    // action to delete
+    try {
+
+        const deletedCar = await Car.findByIdAndDelete({ _id : id })
+        return res.status(200).json({ msg: `Carro deletado foi ${deletedCar}` })
+
+    } catch (err) {
+        return res.status(500).json({ msg: `Aconteceu um erro no servidor, tente novamente mais tarde.` })
+    }
+    
+    
+}
+
+const editCar = async (req, res) => {
+
+    const { id } = req.params
+    console.log(`log do id da req: ${id}`);
+
+    // check if car exists
+    const carExists = await Car.findById({_id : id})
+
+    if(!carExists) {
+        return res.status(422).json({ msg: `carro de id:${id} não existe, favor informar um novo carro!`})
+    }
+
+}
+
 module.exports = { 
     listCars,
     getCarById,
-    createCar
+    createCar,
+    deleteCar,
+    editCar
 }

@@ -138,14 +138,14 @@ const loginUser = async (req, res) => {
 // delete user
 const deleteUser = async (req, res) => {
 
-    // const { id } = req.params
+    const { id } = req.params
 
-    // console.log(req.params);
+    console.log(req.params);
 
-    // // Validations
-    // if(!id) {
-    //     return res.status(422).json({ msg: 'Favor informar usuário.' })
-    // }
+    // Validations
+    if(!id) {
+        return res.status(422).json({ msg: 'Favor informar usuário.' })
+    }
 
     // Check if user exists
     const user = await User.findById({ _id: id })
