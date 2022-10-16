@@ -128,13 +128,57 @@ const deleteCar = async (req, res) => {
 const editCar = async (req, res) => {
 
     const { id } = req.params
+    const { name, brand, model, year, transmission, engine, color, door, license_plate  } = req.body
     console.log(`log do id da req: ${id}`);
 
+    const carData = {
+        id,
+        name,
+        brand,
+        model,
+        year,
+        transmission,
+        engine,
+        color,
+        door,
+        license_plate
+    }
+
     // check if car exists
-    const carExists = await Car.findById({_id : id})
+    const carExists = await Car.findById({ _id : id })
 
     if(!carExists) {
-        return res.status(422).json({ msg: `carro de id:${id} não existe, favor informar um novo carro!`})
+        return res.status(422).json({ msg: `carro de id:${ id } não existe, favor informar um novo carro!`})
+    }
+
+    // update car
+    try {
+        const result = await Car.findByIdAndUpdate(carData.id, {
+        name,
+        brand,
+        model,
+        year,
+        transmission,
+        engine,
+        color,
+        door,
+        license_plate
+
+        })
+
+        const listCarUpdated = await Car.findById(carData.id)
+        console.log(listCarUpdated);
+        return res.status(200).json({ msg: `
+            Carro atualizado com sucesso!
+            Antigo:
+            ${result}
+            
+            Atual:
+            ${listCarUpdated}
+        `})
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'})
     }
 
 }
