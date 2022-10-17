@@ -4,6 +4,15 @@ const mongoose = require('mongoose')
 const { rentsBuilder } = require("../builders/rents.builder")
 
 
+// list of rent cars
+
+const rentCars = async (req, res) => {
+
+    const cars = await Rent.find()
+
+    return res.status(200).json(cars)
+} 
+
 const rentCar = async (req, res) => {
 
     // Get query params id {car_id} 
@@ -128,8 +137,90 @@ const rentsGet = async (req, res) => {
     }
 }
 
+// delete rent
+const deleteRent = async (req, res) => {
+
+    const { id } = req.params
+
+    console.log(req.params);
+
+    
+    // Validations
+    if(!id) {
+        return res.status(500).json({ msg: `Favor informar um aluguel` })
+    }
+    
+    // Check if rent exists
+    const rent = await Rent.findById({ _id: id })
+
+    if(!rent) {
+        return res.status(404).json({ msg: `Aluguel não encontrado!` })
+    }
+
+    try {
+        // Delete rent
+        const deleteRent = await Rent.findOneAndDelete({ _id: id })
+
+        return res.status(200).send(`Aluguel deletado foi: 
+            ${id}, 
+            ${deleteRent}
+        `)
+
+    } catch (err) {
+        console.log("error", err)
+        return res.status(500).json({ msg: `Aluguel ${id} não localizado!` })
+    }
+
+
+}
+
+const editRent = async (req, res) => {
+
+    const { id } = req.params
+    const { car_id, user_id } = req.body
+
+    const rentData = {
+        id,
+        car_id,
+        user_id
+    }
+
+    // Check if rent exists
+
+    const rentExists = await Rent.findOne({ _id: id })
+
+    if(!rentExists) {
+        return res.status(422).json({ msg: `Aluguel não existe!`})
+    }
+
+    try {
+        
+        const result = await Rent.findOneAndUpdate(rentData.id, {
+            
+            car_id,
+            user_id
+
+        })
+
+        const rentListUpdated = await Rent.findById(rentData.id)
+        console.log(rentListUpdated);
+        return res.status(200).json({ msg: `Aluguel Atualizado!
+            Antigo:
+            ${result}
+            Atual:
+            ${rentListUpdated}` })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'})
+    }
+
+}
+
 
 module.exports = {
     rentCar,
-    rentsGet
+    rentsGet,
+    rentCars,
+    deleteRent,
+    editRent
 }
