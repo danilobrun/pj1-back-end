@@ -107,7 +107,7 @@ const loginUser = async (req, res) => {
     const checkPassword = await bcrypt.compare(password, user.password)
 
     if (!checkPassword) {
-        res.status(422).json({ msg: 'Senha inválida!' })
+        return res.status(422).json({ msg: 'Senha inválida!' })
     }
 
     try {
@@ -124,10 +124,10 @@ const loginUser = async (req, res) => {
             }
         )
 
-        res.status(200).json({ msg: 'Autenticação realizada com sucesso!', token })
+        return res.status(200).json({ msg: 'Autenticação realizada com sucesso!', token })
 
     } catch (err) {
-        res
+       return res
             .status(500)
             .json({
                 msg: 'Aconteceu um erro no servidor, tente novamente mais tarde!'

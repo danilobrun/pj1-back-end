@@ -25,6 +25,7 @@ Rotas de usuário CRUD (rotas públicas e privadas): ✅
 
 (Extras: pendentes) 🔄
 - rota editar usuário -> possibilidade de trocar a senha usando o match do bcrypt 🛑
+- const checkPassword = await bcrypt.compare(password, user.password)
 
 
 Rotas de carro CRUD (rotas públicas e privadas): ✅
@@ -55,3 +56,10 @@ Validação na camada de controller usar a lib validator.js; ✅
 Validacao na camada dos models usar o atributo validate do Sequelize; ✅
 Criar autenticação de rotas para os usuários/funcionarios (pelo menos 1 rota) ✅
 Plus - Criar a camada de service para o consumo do banco, tirando essa responsabilidade do controller; ✅
+
+
+#### Dúvidas ####
+1 [x ] - Porque o nodemon crasha após testar rotas com requisições mais de uma vez.
+2 [x ] - Rota deletar usuário crasha sem passar id, deveria cair na validação.
+3 [ x] - É possível via browser enviar requisições http ? EXEMPLO
+4 [ x] - É possível via browser enviar requisições htttp do tipo POST (arquivo JSON) exemplo na localhost?
